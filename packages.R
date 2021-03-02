@@ -14,6 +14,8 @@ install.packages("tidyr")
 install.packages("WDI")
 install.packages("xtable")
 install.packages("Zelig")
+
+###not available for R 4.0.2
 install.packages("ZeligBayesian",
                  repos = "http://r.iq.harvard.edu/",
                  type = "source")
