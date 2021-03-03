@@ -91,3 +91,20 @@ summary(FertFactor)
 
 #merging datasets
 #create two datasets to merge
+library(RCurl)
+UrlAddress <- paste0("https://raw.githubusercontent.com/",
+                     "christophergandrud/Disproportionality",
+                     "_Data/master/Disproportionality.csv")
+DataUrl <- getURL(UrlAddress)
+DispropData <- read.table(textConnection(DataUrl),
+                          sep = ",", header = TRUE)
+library(repmis)
+FinDataFull <- source_data("fin_research_note.csv", "exh4iobbm2p5p1v",
+                                          sep = ",", header = TRUE)
+
+FinURL <- paste0("https://raw.githubusercontent.com/christophergandrud/Disproportionality_Data/master/Disproportionality.csv")
+
+# Download data
+FinDataFull <- repmis::source_data(FinURL,
+                             sep = ",",
+                             header = TRUE)
