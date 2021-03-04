@@ -108,3 +108,34 @@ FinURL <- paste0("https://raw.githubusercontent.com/christophergandrud/Dispropor
 FinDataFull <- repmis::source_data(FinURL,
                              sep = ",",
                              header = TRUE)
+
+MergedData1 <- merge(x = FinDataFull,
+                     y = DispropData,
+                     by = "iso2c",
+                     all = TRUE)
+
+MergedData1 <- merge(MergedData1,
+                     GatheredFertSub,
+                     by = "iso2c",
+                     all = TRUE)
+
+names(MergedData1)
+
+MergedData2 <- merge(FinDataFull, DispropData,
+                     union("iso2c", "year"),
+                     all = TRUE)
+
+MergedData2 <- merge(MergedData2, GatheredFertSub,
+                     union("iso2c", "year"),
+                     all = TRUE)
+names(MergedData2)
+
+DataDuplicates <- MergedData2[duplicated(MergedData2[, 1:2]), ]
+nrow(DataDuplicates)
+DataNotDuplicates <- MergedData2[!duplicated(MergedData2[, 1:2]), ]
+
+FinalCleanedData <- dplyr::select(DataNotDuplicates,
+                                  -country.y, -country)
+FinalCleanedData <- dplyr::rename(FinalCleanedData,
+                                  country = country.x)
+names(FinalCleanedData)
